@@ -1,0 +1,66 @@
+# Blue Thumb Virtual Triangulation Configuration
+
+data_sources:
+  state: "Oklahoma"
+  state_code: "US:40"
+  characteristic: "Chloride"  # Can also be a list for multiple parameters
+  site_type: "Stream"         # CRITICAL: Filters to stream sites only
+  sample_media: "Water"       # CRITICAL: Filters to water samples only
+  providers:                  # CRITICAL: Data providers to query
+    - "NWIS"
+    - "STORET"
+  date_range:
+    start: "1993-01-01"
+    end: "2024-12-31"
+
+organizations:
+  volunteer:
+    - "OKCONCOM_WQX"
+    - "CONSERVATION_COMMISSION"
+  
+  professional:
+    - "OKWRB-STREAMS_WQX"    # Oklahoma Water Resources Board - Streams
+    - "O_MTRIBE_WQX"          # Otoe-Missouria Tribe
+    - "OKWRB-LAKES_WQX"       # Oklahoma Water Resources Board - Lakes
+    - "USGS-OK"               # US Geological Survey - Oklahoma
+    - "USGS-AR"               # US Geological Survey - Arkansas
+    - "USGS-TX"               # US Geological Survey - Texas
+    - "OKDEQ"                 # Oklahoma Department of Environmental Quality
+    - "ARDEQH2O_WQX"          # Arkansas Dept of Environmental Quality
+    - "CHEROKEE"              # Cherokee Nation
+    - "CHEROKEE_WQX"          # Cherokee Nation (WQX)
+    - "OKCORCOM_WQX"          # Oklahoma Corporation Commission
+    - "CNENVSER"              # Cherokee Nation Environmental Services
+    - "IOWATROK_WQX"          # Iowa Tribe of Oklahoma
+    - "KAWNATON_WQX"          # Kaw Nation
+    - "OSAGENTN_WQX"          # Osage Nation
+    - "PNDECS_WQX"            # Pawnee Nation
+    - "SFNOES_WQX"            # Sac and Fox Nation
+    - "WNENVDPT_WQX"          # Wyandotte Nation
+    - "CHOCNATWQX"            # Choctaw Nation
+    - "DELAWARENATION"        # Delaware Nation
+    - "MCNCREEK_WQX"          # Muscogee (Creek) Nation
+    - "QTEO_WQX"              # Quapaw Tribe
+    - "WDEP_WQX"              # Wichita and Affiliated Tribes
+    # Note: Oklahoma has extensive tribal water quality monitoring due to
+    # sovereign nation status. Including all professional sources maximizes
+    # the chance of finding spatial-temporal matches with volunteer data.
+
+geographic_bounds:
+  oklahoma:
+    lat_min: 33.6
+    lat_max: 37.0
+    lon_min: -103.0
+    lon_max: -94.4
+
+matching_parameters:
+  max_distance_meters: 100
+  max_time_hours: 48
+  match_strategy: "all"       # "all" = include all qualifying matches (1-to-many)
+                               # "closest" = take only spatially closest (1-to-1)
+  min_concentration_mg_l: 25  # For professional data only
+
+output_paths:
+  raw_data: "data/raw/"
+  processed_data: "data/processed/"
+  results: "data/outputs/"
