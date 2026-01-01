@@ -1,0 +1,20 @@
+# Data files (too large for git)
+data/raw/*.csv
+data/raw/*.zip
+data/processed/*.csv
+data/outputs/*.png
+data/outputs/*.csv
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+*.ipynb_checkpoints
+
+# Environment
+venv/
+.env
+
+# OS
+.DS_Store
