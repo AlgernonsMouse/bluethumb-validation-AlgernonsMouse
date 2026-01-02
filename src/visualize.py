@@ -86,6 +86,28 @@ def create_validation_plot(matches_df, config):
     print(f"Saved plot: {output_path}")
 
 
+def create_scatterplot(matches_df, config):
+    """Create a simple scatterplot of volunteer vs professional measurements."""
+
+    vol_values = pd.to_numeric(matches_df['Vol_Value'], errors='coerce')
+    pro_values = pd.to_numeric(matches_df['Pro_Value'], errors='coerce')
+    df = pd.DataFrame({'Vol_Value': vol_values, 'Pro_Value': pro_values}).dropna()
+
+    fig, ax = plt.subplots(figsize=(10, 8))
+    ax.scatter(df['Pro_Value'], df['Vol_Value'], alpha=0.7, s=80, color='steelblue')
+    ax.set_xlabel('Professional Chloride (mg/L)')
+    ax.set_ylabel('Volunteer Chloride (mg/L)')
+    ax.set_title('Volunteer vs Professional Chloride (Matched Pairs)')
+    ax.grid(True, linestyle='--', alpha=0.4)
+
+    output_path = Path(config['output_paths']['results']) / 'scatterplot.png'
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    plt.savefig(output_path, dpi=300, bbox_inches='tight')
+    plt.close(fig)
+
+    print(f"Saved plot: {output_path}")
+
+
 def main():
     """Create all visualizations"""
 
@@ -94,6 +116,7 @@ def main():
     matches_df = pd.read_csv(matches_path, low_memory=False)
 
     create_validation_plot(matches_df, config)
+    create_scatterplot(matches_df, config)
 
     print("\n✅ Visualization complete")
 
